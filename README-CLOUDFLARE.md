@@ -10,4 +10,4 @@ Esta versão reúne o visual clássico do dashboard com as funções completas d
 
 ## Estado atual
 
-Os dados de teste são salvos no navegador do aparelho. O projeto já está preparado para a próxima etapa: substituir o armazenamento local por autenticação e banco de dados do Supabase.
+O aplicativo está conectado ao Supabase para login por e-mail e senha, identificação automática de líder/barbeiro, sincronização dos dados e aprovação dos registros.
