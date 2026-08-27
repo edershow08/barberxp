@@ -1,4 +1,10 @@
-# React + Vite
+# BarberXP v41
+
+Atualização com central de notificações, avisos do celular, histórico de temporadas e tipos de ocorrência editáveis.
+
+Antes de publicar, execute `barberxp-notificacoes-v41.sql` no SQL Editor do Supabase.
+
+## Base do projeto
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
