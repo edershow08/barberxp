@@ -1,6 +1,6 @@
-# BarberXP v44
+# BarberXP v45
 
-Correção dos controles da conta, tema em flag e verificação de push sem bloquear a tela.
+Correção da senha dentro da conta e ativação do push clicável com diagnóstico no iPhone.
 
 O push exige a função `supabase/functions/send-push` e o SQL entregue separadamente. Nunca publique a chave VAPID privada no GitHub.
 
