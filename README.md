@@ -1,6 +1,6 @@
-# BarberXP v42
+# BarberXP v43
 
-Atualização com Web Push real pelo Supabase, central de notificações, histórico de temporadas e tipos de ocorrência editáveis.
+Atualização com configurações da conta, flag confirmada de Web Push, teste por aparelho e central de notificações organizada.
 
 O push exige a função `supabase/functions/send-push` e o SQL entregue separadamente. Nunca publique a chave VAPID privada no GitHub.
 
