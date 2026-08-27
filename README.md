@@ -1,8 +1,8 @@
-# BarberXP v41
+# BarberXP v42
 
-Atualização com central de notificações, avisos do celular, histórico de temporadas e tipos de ocorrência editáveis.
+Atualização com Web Push real pelo Supabase, central de notificações, histórico de temporadas e tipos de ocorrência editáveis.
 
-Antes de publicar, execute `barberxp-notificacoes-v41.sql` no SQL Editor do Supabase.
+O push exige a função `supabase/functions/send-push` e o SQL entregue separadamente. Nunca publique a chave VAPID privada no GitHub.
 
 ## Base do projeto
 
