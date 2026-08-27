@@ -1,6 +1,6 @@
-# BarberXP v43
+# BarberXP v44
 
-Atualização com configurações da conta, flag confirmada de Web Push, teste por aparelho e central de notificações organizada.
+Correção dos controles da conta, tema em flag e verificação de push sem bloquear a tela.
 
 O push exige a função `supabase/functions/send-push` e o SQL entregue separadamente. Nunca publique a chave VAPID privada no GitHub.
 
