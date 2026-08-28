@@ -19,3 +19,4 @@ await rm("dist", { recursive: true, force: true });
 await mkdir("dist", { recursive: true });
 await writeFile("dist/index.html", html);
 await writeFile("dist/sw.js", await readFile("sw.js"));
+await writeFile("dist/manifest.webmanifest", await readFile("manifest.webmanifest"));
