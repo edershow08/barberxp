@@ -427,6 +427,40 @@ const rankingPageV46=rankingPage;rankingPage=function(){const page=rankingPageV4
 const redeemV46=redeem;redeem=async function(index){const previousIds=new Set(sharedRewardRedemptions.map(item=>String(item.id))),reward=rewards[index];await redeemV46(index);const redemption=sharedRewardRedemptions.find(item=>!previousIds.has(String(item.id))&&String(item.user_id)===String(currentUser?.id));if(!redemption||!reward)return;let members=teamMembers;if(!members.length){const result=await supabaseClient.from("profiles").select("id,role,active,full_name");members=result.data||[]}const active=members.filter(member=>member.active!==false),redeemer=currentProfile?.full_name||"Um colaborador",general=active.filter(member=>!["leader","manager"].includes(member.role)).map(member=>member.id),operation=active.filter(member=>["leader","manager"].includes(member.role)).map(member=>member.id),message=redeemer+" resgatou "+reward.name+" por "+reward.price+" pontos. O prêmio está indisponível nesta temporada.";await createAppNotifications(general,"reward","Prêmio resgatado",message,{view:"store",redemption_id:redemption.id,suppress_push:true});await createAppNotifications(operation,"reward","Prêmio resgatado na loja",message,{view:"store",redemption_id:redemption.id,suppress_push:true})};
 document.addEventListener("click",async event=>{const button=event.target.closest("#accountPassword");if(!button)return;event.preventDefault();event.stopImmediatePropagation();const password=prompt("Digite a nova senha (mínimo de 6 caracteres):");if(password===null)return;if(password.length<6)return toast("A senha precisa ter pelo menos 6 caracteres",true);const confirmation=prompt("Digite a nova senha novamente:");if(confirmation===null)return;if(password!==confirmation)return toast("As duas senhas precisam ser iguais",true);button.disabled=true;button.textContent="Alterando...";const {error}=await supabaseClient.auth.updateUser({password});button.disabled=false;button.textContent="Alterar";toast(error?"Não foi possível alterar a senha":"Senha alterada com sucesso",!!error)},true);
 const now=new Date();document.querySelector("#dateLabel").textContent=now.toLocaleDateString("pt-BR",{weekday:"long",day:"2-digit",month:"long"}).toUpperCase();bootstrapAuth();
+/* v48.1 — protege serviços em edição e reconfirma o push após atualizações */
+let serviceRulesEditingV481=false;
+document.addEventListener("input",event=>{if(event.target.closest(".rule-label,.rule-xp,.rule-points-barber,.rule-points-manager"))serviceRulesEditingV481=true},true);
+document.addEventListener("click",event=>{if(event.target.closest("#addRule,[data-remove]"))serviceRulesEditingV481=true},true);
+const loadSeasonConfigV481=loadSeasonConfig;
+loadSeasonConfig=async function(shouldRender=true){
+  const preserve=serviceRulesEditingV481&&view==="settings";
+  const draft=preserve?actions.map(action=>({...action})):null;
+  await loadSeasonConfigV481(preserve?false:shouldRender);
+  if(preserve&&draft){actions=draft;state.actionRules=actions;if(shouldRender)render()}
+};
+saveRules=async function(){
+  if(!isOwner())return;
+  const config={barber:{},manager:{}};
+  document.querySelectorAll(".rule-label").forEach(input=>{const action=actions[Number(input.dataset.index)];if(action)action.label=input.value.trim()||"Serviço"});
+  document.querySelectorAll(".rule-xp").forEach(input=>{const action=actions[Number(input.dataset.index)];if(action)action.xp=Math.max(0,Number(input.value)||0)});
+  document.querySelectorAll(".rule-points-barber").forEach(input=>{const action=actions[Number(input.dataset.index)];if(!action)return;const value=Math.max(0,Number(input.value)||0);config.barber[action.key]=value;action.points=value});
+  document.querySelectorAll(".rule-points-manager").forEach(input=>{const action=actions[Number(input.dataset.index)];if(action)config.manager[action.key]=Math.max(0,Number(input.value)||0)});
+  state.actionRules=actions;
+  const button=document.querySelector("#saveRules");if(button){button.disabled=true;button.textContent="Salvando..."}
+  const savedAt=new Date().toISOString(),rows=[{config_key:"service_rules",config_value:actions.map(action=>({...action})),updated_by:currentUser.id,updated_at:savedAt},{config_key:"sales_points",config_value:config,updated_by:currentUser.id,updated_at:savedAt}];
+  const {data,error}=await supabaseClient.from("app_configs").upsert(rows).select("config_key,config_value,updated_at");
+  if(button){button.disabled=false;button.textContent="Salvar regras e pontos"}
+  if(error)return toast("Não foi possível salvar os serviços: "+error.message,true);
+  const savedServices=(data||[]).find(item=>item.config_key==="service_rules")?.config_value;
+  if(!Array.isArray(savedServices)||!savedServices.length)return toast("O Supabase não confirmou a lista de serviços",true);
+  actions=savedServices.map(action=>({...action}));state.actionRules=actions;applySalesPointConfig(config);serviceRulesEditingV481=false;scheduleSave();lastSharedConfigSignature="";render();toast("Serviços, XP e pontos salvos e confirmados")
+};
+async function repairPushV481(){
+  if(!currentUser||!("Notification" in window)||Notification.permission!=="granted")return;
+  try{const registration=await readyPushWorker();if(!registration?.pushManager)return;let subscription=await registration.pushManager.getSubscription();if(!subscription)subscription=await registration.pushManager.subscribe({userVisibleOnly:true,applicationServerKey:vapidBytes(VAPID_PUBLIC_KEY)});const json=subscription.toJSON(),{error}=await supabaseClient.from("push_subscriptions").upsert({user_id:currentUser.id,endpoint:subscription.endpoint,p256dh:json.keys?.p256dh,auth:json.keys?.auth,user_agent:navigator.userAgent,updated_at:new Date().toISOString()},{onConflict:"endpoint"});if(error)console.error("BarberXP push repair:",error.message)}catch(error){console.error("BarberXP push repair:",error)}
+}
+const showAppV481=showApp;
+showApp=function(){showAppV481();setTimeout(repairPushV481,1200)};
 </script>
 </body></html>`;
 
