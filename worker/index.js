@@ -694,6 +694,9 @@ setInterval(()=>{if(currentUser&&!document.hidden&&canManageOperation())loadV71T
 /* v72 — remove duplicação da recepção e impede a consulta antiga de apagar o ritmo */
 const v61ReceptionRankingV72=v61ReceptionRanking;v61ReceptionRanking=function(){return view==="store"?"":v61ReceptionRankingV72()};
 const loadV51V72=loadV51;loadV51=async function(shouldRender=true){await loadV51V72(false);if(canManageOperation())await loadV71TeamPace(false);if(shouldRender)render()};
+/* v73 — mantém a posição horizontal dos dias no ritmo mensal */
+let v73PaceDaysScroll=null;
+const renderV73=render;render=function(){const currentDays=document.querySelector(".v65-month-days");if(currentDays)v73PaceDaysScroll=currentDays.scrollLeft;renderV73();requestAnimationFrame(()=>{const nextDays=document.querySelector(".v65-month-days");if(!nextDays)return;if(v73PaceDaysScroll!==null){nextDays.scrollLeft=v73PaceDaysScroll;return}const selected=nextDays.querySelector(".week-day.selected");if(selected)nextDays.scrollLeft=Math.max(0,selected.offsetLeft-nextDays.clientWidth/2+selected.clientWidth/2)})};
 const showAppV49=showApp;showApp=function(){showAppV49();setTimeout(()=>loadV49(true),1800)};
 const showAppV51=showApp;showApp=function(){showAppV51();setTimeout(()=>loadV51(true),2100)};
 const showAppV52=showApp;showApp=function(){showAppV52();setTimeout(()=>loadV52(true),2400)};
