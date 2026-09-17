@@ -691,6 +691,9 @@ let v71PaceMonth="",v71PaceUpdatedAt="";
 async function loadV71TeamPace(shouldRender=true){if(!currentUser||!canManageOperation())return;const month=v51MonthKey(),{data,error}=await supabaseClient.rpc("get_monthly_team_pace",{p_month:month});if(error){console.error("Falha ao atualizar ritmo mensal",error);return}const members=Array.isArray(data?.members)?data.members:[],monthActions=Array.isArray(data?.actions)?data.actions:[];if(members.length)v51SeasonMembers=members;v51SeasonActions=v51SeasonActions.filter(action=>v51MonthKey(new Date(action.created_at))!==month).concat(monthActions);v71PaceMonth=month;v71PaceUpdatedAt=data?.updated_at||new Date().toISOString();if(shouldRender&&["leader","manager"].includes(view))render()}
 const showAppV71=showApp;showApp=function(){showAppV71();setTimeout(()=>loadV71TeamPace(true),900)};
 setInterval(()=>{if(currentUser&&!document.hidden&&canManageOperation())loadV71TeamPace(true)},20000);
+/* v72 — remove duplicação da recepção e impede a consulta antiga de apagar o ritmo */
+const v61ReceptionRankingV72=v61ReceptionRanking;v61ReceptionRanking=function(){return view==="store"?"":v61ReceptionRankingV72()};
+const loadV51V72=loadV51;loadV51=async function(shouldRender=true){await loadV51V72(false);if(canManageOperation())await loadV71TeamPace(false);if(shouldRender)render()};
 const showAppV49=showApp;showApp=function(){showAppV49();setTimeout(()=>loadV49(true),1800)};
 const showAppV51=showApp;showApp=function(){showAppV51();setTimeout(()=>loadV51(true),2100)};
 const showAppV52=showApp;showApp=function(){showAppV52();setTimeout(()=>loadV52(true),2400)};
