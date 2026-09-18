@@ -1,8 +1,16 @@
-# BarberXP v76
+# BarberXP v78
 
 Atualização consolidada da Edershow: painel mais limpo, Equipe centralizada,
 ranking somente com profissionais reais, evolução antecipada no painel do
 barbeiro, ocorrências dentro de Equipe e criação de acessos por função.
+
+O painel Equipe mantém os acessos recolhidos, remove a repetição da pontuação
+por função e atualiza o ritmo mensal sem reconstruir a página inteira. A tela
+de configurações também deixa Serviços, XP e pontos recolhidos por padrão.
+
+A loja respeita a visão ativa, o dashboard não repete o histórico e o perfil
+reúne as medalhas conquistadas em temporadas encerradas. As cinco missões da
+semana permanecem visíveis durante novas sincronizações e consultas lentas.
 
 Clube, Produtos, Próxima Campanha e Reconhecimentos foram ocultados da
 navegação sem apagar o código ou o histórico. Esta versão mantém as correções
