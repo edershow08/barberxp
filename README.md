@@ -1,4 +1,4 @@
-# BarberXP v80
+# BarberXP v82
 
 Atualização consolidada da Edershow: painel mais limpo, Equipe centralizada,
 ranking somente com profissionais reais, evolução antecipada no painel do
