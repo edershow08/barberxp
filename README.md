@@ -1,6 +1,13 @@
-# BarberXP v45
+# BarberXP v76
 
-Correção da senha dentro da conta e ativação do push clicável com diagnóstico no iPhone.
+Atualização consolidada da Edershow: painel mais limpo, Equipe centralizada,
+ranking somente com profissionais reais, evolução antecipada no painel do
+barbeiro, ocorrências dentro de Equipe e criação de acessos por função.
+
+Clube, Produtos, Próxima Campanha e Reconhecimentos foram ocultados da
+navegação sem apagar o código ou o histórico. Esta versão mantém as correções
+anteriores, inclusive notificações, datas retroativas, meta coletiva, ritmo
+mensal e gráfico individual.
 
 O push exige a função `supabase/functions/send-push` e o SQL entregue separadamente. Nunca publique a chave VAPID privada no GitHub.
 
