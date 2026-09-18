@@ -1,4 +1,4 @@
-# BarberXP v78
+# BarberXP v80
 
 Atualização consolidada da Edershow: painel mais limpo, Equipe centralizada,
 ranking somente com profissionais reais, evolução antecipada no painel do
@@ -11,6 +11,11 @@ de configurações também deixa Serviços, XP e pontos recolhidos por padrão.
 A loja respeita a visão ativa, o dashboard não repete o histórico e o perfil
 reúne as medalhas conquistadas em temporadas encerradas. As cinco missões da
 semana permanecem visíveis durante novas sincronizações e consultas lentas.
+
+A semana agora é calculada integralmente no fuso de São Paulo. Temporadas
+mostram todas as medalhas recebidas no mês, incluindo Iniciante e a colocação
+no pódio, enquanto o perfil mantém cada conquista separada por data. O ritmo
+mensal preserva barbeiro e dia e diferencia toque de arrasto no celular.
 
 Clube, Produtos, Próxima Campanha e Reconhecimentos foram ocultados da
 navegação sem apagar o código ou o histórico. Esta versão mantém as correções
