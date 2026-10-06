@@ -1,9 +1,62 @@
-# BarberXP v83 — foto e apelido pessoal
+# BarberXP v84 — produtos, estoque e comissões
+
+## Atualização v84
+
+1. No Supabase → SQL Editor, abra uma consulta nova, copie todo o arquivo
+   `barberxp-produtos-comissoes-v84.sql` e execute. Preserve as consultas antigas.
+2. Extraia o pacote na raiz do projeto BarberXP, substituindo os arquivos.
+3. Faça commit e push. Aguarde a publicação e reabra o aplicativo.
+4. Na visão do dono ou gestor, abra **Produtos**. Cadastre nome, custo por unidade e preço
+   de venda. As comissões começam em **15% para barbeiros** e **10% para recepção**.
+5. Salve o catálogo e as comissões antes de registrar entradas no estoque.
+   Uma entrada representa a quantidade comprada; uma venda representa uma unidade.
+
+O SQL v84 é único e inclui a estrutura de entradas, caso ela ainda não exista.
+Ele não apaga dados nem reexecuta migrações de missões, push ou fotos.
+Se o SQL v83 já foi executado, não é necessário repeti-lo.
+
+### Cálculos e histórico
+
+Ao registrar, escolha **Cliente do plano** ou **Cliente avulso**. Clientes do plano
+têm 10% de desconto, aplicado pelo banco ao preço do catálogo. O avulso paga o preço
+integral. A escolha não valida automaticamente a assinatura: o vendedor a informa.
+Os relatórios separam vendas, faturamento e descontos por tipo de cliente.
+
+Comissão = valor efetivamente vendido (após desconto) × percentual da função.
+Margem = venda após desconto − custo − comissão.
+Os cálculos monetários são arredondados para centavos. Margem não representa lucro
+líquido: taxas, impostos e despesas ainda não são descontados.
+
+O banco registra produto, preço de tabela, tipo de cliente, desconto, valor vendido,
+custo, função, percentual e comissão no lançamento.
+Trocar preço, custo ou função posteriormente não altera os valores daquela venda.
+Somente vendas aprovadas entram no resultado mensal e reduzem o estoque.
+Vendas antigas sem comissão registrada são identificadas e ficam fora do cálculo
+completo; não são convertidas automaticamente em comissões a pagar.
+Entradas antigas sem custo também são preservadas sem inventar um valor histórico.
+
+O dono e o gestor podem cadastrar produtos, registrar entradas, selecionar o mês e
+conferir valores e comissões. Somente o dono altera percentuais de comissão e meta.
+Barbeiros continuam escolhendo o tipo de cliente e o produto, sem valores financeiros
+na seleção. Gestores veem o preço correto na venda; custos e margens ficam na gestão.
+A comissão escalonada fica para uma próxima versão.
+
+### Validação v84
+
+Testes locais de PostgreSQL: regras 15%/10%, autorização do dono, gravação atômica,
+valores calculados pelo banco, desconto de 10% antes da comissão, preservação do
+histórico, acesso do gestor ao catálogo/estoque e migração repetível.
+Testes de interface simulada: cadastro, rascunho, navegação, falha de envio,
+clique repetido, margens e exclusão de pendentes. Também foram repetidos os cenários
+de ocorrências, fotos e apelido do v83. Falta a conferência nos aparelhos reais após
+a publicação no seu projeto.
+
+## Recursos mantidos do v83
 
 Esta versão parte da v82, mantendo seu código de notificações, resumo semanal,
 missões, medalhas por resgate, ranking mensal e ritmo da equipe.
 
-## Instalação
+### Instalação inicial da personalização (somente se o SQL v83 ainda não foi executado)
 
 1. Execute `barberxp-personalizacao-v83.sql` no SQL Editor do Supabase.
 2. Extraia o pacote na raiz do projeto e substitua os arquivos.
