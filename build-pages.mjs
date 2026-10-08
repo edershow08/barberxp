@@ -25,7 +25,7 @@ await writeFile(path.join(dist, 'index.html'), html);
 await copyFile(path.join(root, 'sw.js'), path.join(dist, 'sw.js'));
 const manifest = {
   name: 'BarberXP', short_name: 'BarberXP', start_url: '/', display: 'standalone',
-  background_color: '#020617', theme_color: '#22c55e', icons: [],
+  background_color: '#101419', theme_color: '#46d58b', icons: [],
 };
 for (const size of [192, 512]) {
   const filename = `icon-${size}.png`;

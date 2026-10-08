@@ -1,4 +1,19 @@
-# BarberXP v86 — reposição rápida e visual grafite
+# BarberXP v87 — correção da paleta e dos ícones
+
+## Instalar v87 sobre v86
+
+Esta atualização corrige as superfícies que ainda usavam o azul anterior e adiciona
+ícones vetoriais verdes: caixa no estoque, etiqueta no cadastro, lista na consulta,
+gráfico nas vendas e alvo nas comissões. A navegação usa ícones da mesma família.
+A quantidade possui controles + e −. O rodapé mostra **BarberXP v87** para conferir
+se a publicação correta está aberta. A imagem é referência visual, não captura do app.
+
+Extraia na raiz do projeto substituindo os arquivos, faça commit e push, aguarde
+a publicação e reabra o aplicativo. Não precisa de outro SQL se o v86 foi executado.
+Na primeira abertura desta atualização, o tema escuro aprovado é ativado uma vez.
+Depois a pessoa pode voltar ao tema claro nas configurações, se preferir.
+
+## Referência da estrutura v86
 
 ## Instalar v86
 
