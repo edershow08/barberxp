@@ -1,4 +1,28 @@
-# BarberXP v85 — produto e quantidade no mesmo salvamento
+# BarberXP v86 — reposição rápida e visual grafite
+
+## Instalar v86
+
+1. Supabase → SQL Editor → consulta nova: execute somente
+   `barberxp-produtos-visual-v86.sql` inteiro. Esse arquivo reúne o v85 atualizado
+   (incluindo a comissão pessoal) e a reposição v86. Pode repetir se já executou
+   o v85: não apaga os registros. Requer a estrutura de produtos v84 já instalada.
+2. Extraia o pacote na raiz do projeto, substitua os arquivos, faça commit e push.
+3. Aguarde a publicação e reabra o aplicativo.
+
+Em **Produtos**, a entrada de estoque fica aberta: selecione o produto existente,
+informe a quantidade e use **Salvar entrada de estoque**. Isso soma ao estoque e
+não altera nome, preço ou custo. A tela mostra o estoque atual e a previsão após
+a entrada; vendas pendentes só reduzem estoque quando aprovadas.
+
+**Cadastrar ou editar produtos**, **Consultar estoque**, **Vendas e resultados**
+e **Comissões e meta de margem** são seções recolhidas. A criação de um produto
+mantém o botão que salva produto e quantidade inicial juntos. A comissão pessoal
+continua abaixo do ritmo da semana no dashboard do barbeiro.
+
+A paleta escura utiliza grafite, cartões escuros e botões verdes. O tema claro
+continua disponível. A navegação e as permissões das funções são preservadas.
+
+## Referência da v85
 
 ## Instalar v85 sobre v84
 
