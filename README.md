@@ -1,4 +1,41 @@
-# BarberXP v84 — produtos, estoque e comissões
+# BarberXP v85 — produto e quantidade no mesmo salvamento
+
+## Instalar v85 sobre v84
+
+1. Supabase → SQL Editor → consulta nova: execute `barberxp-produto-individual-v85.sql` inteiro.
+2. Extraia este pacote na raiz do projeto, substituindo os arquivos. Não crie uma subpasta.
+3. Execute `git add .`, faça commit e push. Aguarde a publicação e reabra o aplicativo.
+
+Em **Produtos**, use **Novo produto**. Preencha nome, preço de venda, custo e quantidade
+inicial e clique em **Salvar produto e quantidade**. Cada produto possui seu próprio botão.
+Para um produto existente, a quantidade é uma entrada adicional, somada ao estoque;
+deixe zero para editar só o nome e os preços. A quantidade volta a zero após salvar.
+Uma mesma tentativa repetida não duplica produto ou estoque. Se a conexão impedir a
+confirmação, use **Tentar novamente** antes de modificar os campos.
+
+Os resultados financeiros, comissões e meta ficam abaixo do cadastro. Só o dono
+altera percentuais e meta; dono e gestor cadastram produtos e entradas de estoque.
+As atualizações de dados preservam os campos e a posição do formulário. Rascunhos
+são mantidos durante a navegação da sessão; salve antes de fechar o aplicativo.
+
+O SQL v85 não apaga produtos, vendas ou estoque. Requer a estrutura v84 já instalada.
+Caso a v84 ainda não esteja configurada, execute primeiro o SQL v84 incluído no pacote.
+Não é necessário repetir outros SQLs. Não altere os segredos VAPID ou a função de push.
+
+### Comissão pessoal no dashboard
+
+Na visão de barbeiro, abaixo do ritmo da semana, **Sua comissão em produtos** exibe
+o percentual atual e o valor acumulado do mês em suas próprias vendas aprovadas.
+O total usa a comissão gravada em cada venda; não recalcula registros antigos ao
+trocar a porcentagem. Vendas antigas sem comissão registrada ficam fora do valor
+e recebem um aviso. Custos e margens da barbearia não aparecem neste cartão.
+O resumo consulta apenas a conta conectada e atualiza em até cerca de 20 segundos
+enquanto o dashboard estiver aberto. O mês segue o horário de São Paulo.
+
+Se o SQL v85 anterior já foi executado, execute este arquivo v85 atualizado novamente
+em uma consulta nova para adicionar o resumo pessoal. O script pode ser repetido.
+
+## Histórico da estrutura v84 (já instalada)
 
 ## Atualização v84
 
