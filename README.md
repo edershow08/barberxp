@@ -1,4 +1,24 @@
-# BarberXP v87 — correção da paleta e dos ícones
+# BarberXP v88 — modernização dos painéis e padrão visual
+
+## Instalar v88 sobre v86 ou v87
+
+Extraia na raiz do projeto substituindo os arquivos, faça commit e push, aguarde
+a publicação e reabra o aplicativo. Não precisa de outro SQL se o v86 foi executado.
+O rodapé mostra **BarberXP v88**.
+
+O painel do dono mostra primeiro a meta coletiva, depois atalhos de aprovação e
+equipe e acesso a relatórios/temporadas e produtos. O barbeiro mantém os números
+reais, suas missões e bônus, ranking compacto e comissão pessoal. A comparação
+mensal fica em **Minha evolução**, que pode ser expandida. O ritmo ganha linha
+contínua e pontos, mantendo os dias clicáveis e o detalhamento dos serviços.
+
+Navegação inferior no celular do barbeiro: Início, Registrar, Ranking e Loja.
+O menu completo continua disponível. As telas usam os mesmos campos, cartões,
+botões e ícones, com contraste de grafite/verde no escuro e tema claro disponível.
+Nenhum número de demonstração da imagem foi incorporado. Cadastros, vendas,
+aprovações, pontos, medalhas e regras atuais são preservados.
+
+## Referência da v87
 
 ## Instalar v87 sobre v86
 
