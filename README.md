@@ -1,4 +1,56 @@
-# BarberXP v88 — modernização dos painéis e padrão visual
+# BarberXP v89 — vendas, comissões e produção por profissional
+
+## Atualizar sobre v88
+
+1. Supabase → SQL Editor → consulta nova: execute inteiro
+   `barberxp-relatorio-profissionais-v89.sql`. Pode repetir, sem apagar dados.
+2. Extraia este pacote na raiz do projeto, substitua os arquivos, faça commit e push.
+3. Aguarde a publicação e reabra o aplicativo. Confira **BarberXP v89** no rodapé.
+
+### Onde consultar os valores
+
+Em **Produtos**, abra a última seção **Vendas e comissões por profissional**.
+Selecione mês, unidade e, opcionalmente, profissional. No computador há uma tabela;
+no celular, cartões com os valores visíveis: vendas, percentual(is), comissão e
+margem após custo e comissão. O total inclui vendas, custo, comissões e margem.
+Quando um profissional está selecionado, o total corresponde somente a ele.
+
+O relatório lê todas as ações aprovadas do mês no banco, sem limite de 1.000 linhas
+do cliente. O mês segue São Paulo. Usa o preço após desconto do plano e a comissão
+gravados em cada venda, sem recalcular o passado. Percentuais distintos no mesmo
+mês aparecem juntos. Não representa saldo pago ou líquido de impostos/despesas.
+Registros antigos sem cálculo são sinalizados e excluídos dos valores monetários.
+Falhas de carregamento exibem aviso, sem apresentar um zero como resultado real.
+
+### Unidades: primeira configuração pelo dono
+
+A base anterior não tinha unidade vinculada aos profissionais. O SQL cria
+**Unidade 1** e **Unidade 2**, sem atribuir ninguém automaticamente.
+No painel do dono, vá a **Equipe → Unidades da equipe**, selecione profissional
+e unidade e salve. As próximas ações preservarão a unidade da data do registro.
+
+Para registros antigos, marque **Vincular também os registros anteriores...**
+somente se aqueles registros realmente pertencem à unidade selecionada.
+A opção vincula apenas registros ainda sem unidade. Transferir alguém depois
+não altera registros que já estavam vinculados. Sem configuração, os totais
+continuam consultáveis em **Todas as unidades** ou **Sem unidade definida**.
+
+### Gestor e visual mobile
+
+O gestor tem **Equipe**, com produção dos barbeiros, dono e recepção, inclusive
+a sua própria. Consulta mês/unidade/profissional, apenas ações aprovadas.
+Não ganha edição de acessos nem permissão de alterar unidades ou percentuais.
+Ocorrências continuam em uma seção recolhida, com proteção do formulário.
+
+Registrar usa **+**, Ranking usa **troféu**, Loja usa **presente**. O visual mobile
+do pódio e dos cartões de prêmios foi ajustado sem alterar pontuação, ordem do
+ranking, estoque, resgates ou regras de premiação. Não foram incluídas fotos de
+prêmios fictícios nem as novas abas de agenda/clientes desenhadas na ilustração.
+
+Os relatórios de gestão exigem conta ativa de dono/gestor e são bloqueados no
+banco para barbeiros. O resumo pessoal do barbeiro permanece separado.
+
+## Referência da v88
 
 ## Instalar v88 sobre v86 ou v87
 
