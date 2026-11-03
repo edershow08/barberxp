@@ -1,3 +1,17 @@
+# BarberXP v93 — correções de interface e carregamento
+
+Esta é uma atualização de interface sobre a v92. Quem já executou barberxp-atualizacao-v92.sql não precisa de um novo SQL. Substitua os arquivos, publique e confira BarberXP v93 no rodapé.
+
+Equipe: Unidades e profissionais aparece no início da página, sem depender de abrir um menu recolhido. Cada unidade tem o campo de nome, Salvar nome, profissionais vinculados abaixo e um seletor Adicionar à unidade para mover ou vincular pessoas. Profissionais sem unidade aparecem separados. O carregamento cria os campos mesmo quando o banco responde depois da primeira abertura. Alterar unidade afeta próximos registros; não move histórico já vinculado.
+
+Gráficos: seleção isolada por usuário, função e mês; profissional, dia e indicador mantidos durante sincronizações, inclusive respostas temporariamente vazias. A imagem do gráfico permanece estável; Atualizar dados do gráfico busca novos registros. Cliques no profissional, no dia e no indicador mudam apenas a área do gráfico. Os relatórios de produção continuam sincronizando.
+
+Produtos: painel Comissão escalonável com abas Configuração e Histórico de comissões, sem menus de configuração duplicados. Dois cartões com quatro valores e quatro percentuais editáveis, seguindo a organização aprovada. Regra antes da primeira meta disponível no detalhe logo abaixo de cada cartão; a validação abre esse campo quando necessário. Cálculo, regras financeiras e histórico da v92 permanecem iguais.
+
+Testes locais: entrada na página com listas vazias, resposta atrasada cria unidades e comissões sem navegar novamente; edição e vinculação com permissões; cliques reais em profissional, dia, indicador e abas; atualizações e listas temporariamente vazias não mudam a seleção. Não houve teste no banco de produção nem no iPhone real.
+
+---
+
 # BarberXP v92 — unidades editáveis, comissão aprovada e contraste
 
 ## Instalação desta atualização
