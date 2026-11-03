@@ -1,3 +1,17 @@
+# BarberXP v94 — edição de comissões e seleção de profissionais
+
+Atualização de interface sobre a v93. Não há SQL novo; permanece a estrutura da v92.
+
+Comissões: dono pode editar valores e percentuais mesmo com a flag desligada. A flag controla a aplicação da regra. Para aplicar os novos limites/percentuais, ative a função e salve. Enquanto edita, os controles não são recriados pela sincronização; o rascunho fica preservado. Gestores continuam sem permissão de configurar comissões.
+
+Unidades: seleção interna de profissional com lista e busca substitui o seletor nativo. Clique em Selecionar profissional, busque o nome, clique na pessoa e use Adicionar à unidade para gravar. O seletor aberto e o texto da busca permanecem intactos durante atualizações. A escolha em si não faz requisição ao banco. Ao concluir, o foco retorna ao cabeçalho do seletor, evitando manter um campo oculto em foco.
+
+Validação local de primeira abertura com dados atrasados, clique com MouseEvent, busca/seleção, atualização durante menu aberto, edição com flag desligada, alternância da flag, preservação do valor/percentual, permissões de gestor e regressão de gráfico/unidades. Ainda não testado no navegador físico do usuário.
+
+Substitua os arquivos, publique e confira BarberXP v94 no rodapé.
+
+---
+
 # BarberXP v93 — correções de interface e carregamento
 
 Esta é uma atualização de interface sobre a v92. Quem já executou barberxp-atualizacao-v92.sql não precisa de um novo SQL. Substitua os arquivos, publique e confira BarberXP v93 no rodapé.
