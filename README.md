@@ -1,3 +1,18 @@
+# BarberXP v91 — recepção no gráfico e comissão escalonável
+
+1. Execute barberxp-atualizacao-v91.sql no SQL Editor, em nova consulta. É o único SQL necessário para esta atualização sobre a v90. Ao final aparece uma tabela de diagnóstico das vendas da recepção por mês: aprovadas, pendentes, recusadas e registros sem cálculo. Ela não inventa comissão nem altera vendas antigas.
+2. Substitua os arquivos do aplicativo, publique e confira BarberXP v91 no rodapé. A função admin-team permanece igual.
+
+Em Produtos, Comissão escalonável fica acima do estoque. Barbeiros/dono e recepção/gestores aparecem juntos, cada função com sua chave de ativação e limites de venda para 15%, 20% e 25%; a primeira faixa é 10%. Uma configuração segue vigente nos meses posteriores até ser alterada; o acumulado individual reinicia a cada mês. Salvar recalcula o mês atual e preserva meses encerrados. O histórico consultado não muda o formulário de configuração.
+
+A meta mensal de margem é editável no fim do mesmo bloco. Nenhum valor de meta nem limites novos são inventados. Ao desligar as faixas, os percentuais fixos registrados nas vendas são preservados.
+
+Equipe: o gráfico existente inclui recepção individual, recepção total e equipe total, com produtos e assinaturas entre as métricas. Mede vendas registradas/aprovadas, sem presumir a causa de uma queda. Os avisos no relatório distinguem vendas pendentes e sem cálculo; vendas antigas sem dados completos precisam ser conferidas antes de pagar comissão.
+
+A implementação e os cenários de SQL e interface foram testados localmente. O banco de produção da Edna não foi consultado; o resultado final da consulta permite identificar o motivo do zero sem alterar o histórico.
+
+---
+
 # Complemento v90.2 — produção de toda a equipe
 
 Produção inclui dono, barbeiros, gestores e recepção. Comissões lista todos os ativos, mesmo sem vendas aprovadas, e preserva vendas anteriores de desativados. Valores são calculados somente com vendas aprovadas; registros antigos sem cálculo permanecem sinalizados.

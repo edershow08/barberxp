@@ -32,7 +32,7 @@ begin
   ) order by p.full_name),'[]'::jsonb)
   into v_members
   from public.profiles p
-  where p.active=true and p.role in ('leader','barber');
+  where p.active=true and p.role in ('leader','barber','manager');
 
   select coalesce(jsonb_agg(jsonb_build_object(
     'id',a.id,'user_id',a.user_id,'action_key',a.action_key,
