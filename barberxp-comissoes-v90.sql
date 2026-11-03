@@ -1,6 +1,3 @@
--- BarberXP v90.1: execute este arquivo completo em uma consulta nova.
--- Inclui comissoes, equipe ativa e sincronizacao de identidade.
-
 -- v89: unidades, fotografia da unidade no registro e relatórios de gestão.
 -- Requer produtos/comissões v84 e as atualizações v85/v86 já instaladas.
 begin;
@@ -46,7 +43,7 @@ begin
  from barber_actions a left join profiles p on p.id=a.user_id
  where a.status='approved' and a.created_at>=v_from and a.created_at<v_to
  and (p_unit is null or (p_unit=-1 and a.barberxp_unit_id is null) or a.barberxp_unit_id=p_unit)
- ),financial as (
+ ),financial_sales as (
  select user_id,name,member_role,count(*) as sales,count(*) filter(where has_financial) as known_sales,count(*) filter(where not has_financial) as legacy_sales,
  sum(case when has_financial then (metadata->>'sale_price')::numeric else 0 end) as revenue,
  sum(case when has_financial then (metadata->>'cost_price')::numeric else 0 end) as cost,
@@ -54,6 +51,14 @@ begin
  sum(case when has_financial then (metadata->>'profit')::numeric else 0 end) as margin,
  coalesce(jsonb_agg(distinct (metadata->>'commission_percent')::numeric) filter(where has_financial),'[]'::jsonb) as rates
  from approved where action_key='produtos' group by user_id,name,member_role
+ ),financial as (
+ select * from financial_sales
+ union all
+ select p.id,coalesce(p.full_name,p.email,'Colaborador'),p.role,0::bigint,0::bigint,0::bigint,
+ 0::numeric,0::numeric,0::numeric,0::numeric,'[]'::jsonb
+ from profiles p left join barberxp_member_units mu on mu.user_id=p.id
+ where p.active and not exists(select 1 from financial_sales f where f.user_id=p.id)
+ and (p_unit is null or (p_unit=-1 and mu.unit_id is null) or mu.unit_id=p_unit)
  ),production as (
  select p.id as user_id,coalesce(p.full_name,p.email,'Colaborador') as name,p.role,p.active,
  count(a.id) as actions,count(a.id) filter(where a.action_key='cortes') as cortes,count(a.id) filter(where a.action_key='barbas') as barbas,
@@ -61,7 +66,7 @@ begin
  count(a.id) filter(where a.action_key='assinaturas') as assinaturas,count(a.id) filter(where a.action_key='reativacoes') as reativacoes,
  count(a.id) filter(where a.action_key not in ('cortes','barbas','extras','produtos','assinaturas','reativacoes')) as outras
  from profiles p left join approved a on a.user_id=p.id left join barberxp_member_units mu on mu.user_id=p.id
- where p.active or (p_month<to_char(now() at time zone 'America/Sao_Paulo','YYYY-MM') and exists(select 1 from approved x where x.user_id=p.id))
+ where p.active or exists(select 1 from approved x where x.user_id=p.id)
  group by p.id,p.full_name,p.email,p.role,p.active,mu.unit_id
  having p_unit is null or count(a.id)>0 or (p_unit=-1 and mu.unit_id is null) or mu.unit_id=p_unit
  ) select jsonb_build_object('month',p_month,'unit_id',p_unit,

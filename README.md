@@ -1,9 +1,15 @@
-# BarberXP v90.1 — comissão por faixa, equipe ativa e cadastro confirmado
+# Complemento v90.2 — produção de toda a equipe
+
+Produção inclui dono, barbeiros, gestores e recepção. Comissões lista todos os ativos, mesmo sem vendas aprovadas, e preserva vendas anteriores de desativados. Valores são calculados somente com vendas aprovadas; registros antigos sem cálculo permanecem sinalizados.
+
+Quem já instalou v90.1 executa apenas barberxp-equipe-completa-v90.2.sql e atualiza o aplicativo. A função admin-team não precisa ser alterada.
+
+# BarberXP v90.2 — comissão por faixa, equipe ativa e cadastro confirmado
 
 ## Complemento desta mesma atualização
 
 Ao desativar, o colaborador sai automaticamente da equipe ativa, do ranking
-atual e da produção atual. Quem já estava inativo também deixa de aparecer na
+atual. Sua produção aprovada permanece no relatório do período. Quem já estava inativo também deixa de aparecer na
 lista de equipe. As vendas, ocorrências, temporadas anteriores e comissões
 continuam registradas para conferência e acerto. Nenhuma conta é apagada com
 exclusão física, que destruiria dados ligados ao colaborador. Novas ações de
@@ -28,7 +34,7 @@ aparelho. Gestores não ganham permissão de editar acessos.
    Mantenha a verificação de JWT ativa. A função também valida a sessão no Auth
    e exige perfil ativo de dono antes de qualquer alteração administrativa.
 3. Extraia o pacote na raiz do projeto, substitua os arquivos, faça commit/push
-   e confira **BarberXP v90.1** no rodapé após a publicação.
+   e confira **BarberXP v90.2** no rodapé após a publicação.
 
 Como alternativa para quem já usa a CLI: `supabase functions deploy admin-team`.
 O projeto deve estar ligado ao Supabase correto e autenticado na CLI.
