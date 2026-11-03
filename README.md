@@ -1,3 +1,20 @@
+# BarberXP v92 — unidades editáveis, comissão aprovada e contraste
+
+## Instalação desta atualização
+
+1. Execute apenas barberxp-atualizacao-v92.sql numa nova consulta do SQL Editor do Supabase. O arquivo reúne as migrações sobre a estrutura de produtos já instalada. Não apaga contas, ações nem histórico.
+2. Substitua os arquivos do aplicativo em C:\Users\Nicolas\barberxp, publique e confira BarberXP v92 no rodapé. A função admin-team não precisa ser alterada.
+
+Equipe → Unidades da equipe: o dono pode editar o nome de cada unidade e salvar. A unidade mantém o ID; profissionais, registros e comissões não mudam de unidade ao renomear. Abaixo, selecione profissional e unidade para distribuir a equipe. A opção de vincular registros antigos só alcança ações ainda sem unidade; não move históricos já vinculados. Campos preservam o rascunho durante sincronização. Nomes duplicados e alterações concorrentes são sinalizados.
+
+Produtos → Comissão escalonável: visual aprovado, quatro metas e quatro percentuais editáveis por função. Valores propostos 140/220/300/400 e percentuais 10/15/20/25 não são ativados automaticamente. Antes de ativar, defina também o percentual antes da primeira meta. É possível informar zero, ou o percentual desejado. O cálculo por parcelas continua como escolhido anteriormente: cada parte da venda recebe a porcentagem da sua faixa; não aplica a maior porcentagem ao total inteiro. A configuração segue nos próximos meses até alteração. Salvar recalcula o mês atual e preserva meses encerrados. Cada profissional acumula suas próprias vendas; a soma considera todas as unidades, e o relatório distribui os valores pela unidade de cada venda. Desligar a regra preserva o percentual fixo registrado nas vendas.
+
+A meta de margem é opcional (zero ou em branco significa sem meta). Nomes personalizados de unidades permanecem ao executar o SQL novamente. Temas claro e escuro recebem contraste maior em textos, campos e navegação; campos de entrada têm 16px para facilitar o uso no celular, com marca BarberXP no topo mobile e menu oliva no notebook.
+
+Validação local: banco SQL, limites das faixas e permissões, edição e atribuição de unidades, repetição do instalador, rascunhos e cliques duplicados na interface; pares principais de texto/fundo com contraste mínimo 4,5:1. Não houve teste conectado ao banco de produção nem confirmação dos valores reais da Edna.
+
+---
+
 # BarberXP v91 — recepção no gráfico e comissão escalonável
 
 1. Execute barberxp-atualizacao-v91.sql no SQL Editor, em nova consulta. É o único SQL necessário para esta atualização sobre a v90. Ao final aparece uma tabela de diagnóstico das vendas da recepção por mês: aprovadas, pendentes, recusadas e registros sem cálculo. Ela não inventa comissão nem altera vendas antigas.
