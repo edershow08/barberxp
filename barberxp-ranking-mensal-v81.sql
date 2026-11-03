@@ -53,7 +53,9 @@ begin
       and a.created_at>=v_from
       and a.created_at<v_to
     left join public.barber_states bs on bs.user_id=p.id
-    where p.active=true and p.role in ('leader','barber')
+    where (p.active=true or (v_month<to_char(now() at time zone 'America/Sao_Paulo','YYYY-MM') and exists(
+      select 1 from public.barber_actions past where past.user_id=p.id and past.status='approved' and past.created_at>=v_from and past.created_at<v_to
+    ))) and p.role in ('leader','barber')
     group by p.id,p.full_name,p.email,p.role,bs.state
   )
   select coalesce(jsonb_agg(jsonb_build_object(

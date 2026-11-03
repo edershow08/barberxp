@@ -1,4 +1,107 @@
-# BarberXP v89 — vendas, comissões e produção por profissional
+# BarberXP v90.1 — comissão por faixa, equipe ativa e cadastro confirmado
+
+## Complemento desta mesma atualização
+
+Ao desativar, o colaborador sai automaticamente da equipe ativa, do ranking
+atual e da produção atual. Quem já estava inativo também deixa de aparecer na
+lista de equipe. As vendas, ocorrências, temporadas anteriores e comissões
+continuam registradas para conferência e acerto. Nenhuma conta é apagada com
+exclusão física, que destruiria dados ligados ao colaborador. Novas ações de
+contas desativadas são bloqueadas no banco. A produção já registrada da loja
+continua nos relatórios financeiros e na meta coletiva.
+
+Os campos de nome/e-mail da ficha em **Equipe → Equipe ativa** ficam editáveis
+para o dono. **Salvar cadastro** só mostra sucesso depois de confirmar os valores
+persistidos. Rascunhos ficam preservados durante a sincronização; a atualização
+não pode restaurar o nome antigo recebido por uma consulta que começou antes
+do salvamento. **Recarregar cadastro** permite buscar uma edição feita em outro
+aparelho. Gestores não ganham permissão de editar acessos.
+
+### Instalação adicional para mudar e-mail de colaborador
+
+1. Execute **barberxp-comissoes-v90.sql atualizado**, mesmo se já executou a
+   primeira versão v90. Continua sendo o único SQL necessário.
+2. Supabase → **Edge Functions → Deploy a new function → Via Editor**: crie a
+   função com o nome exato **admin-team**. Substitua o conteúdo de `index.ts`
+   pelo arquivo **barberxp-admin-equipe-v90.ts** entregue junto ao pacote e publique.
+   O mesmo código está em `supabase/functions/admin-team/index.ts` neste projeto.
+   Mantenha a verificação de JWT ativa. A função também valida a sessão no Auth
+   e exige perfil ativo de dono antes de qualquer alteração administrativa.
+3. Extraia o pacote na raiz do projeto, substitua os arquivos, faça commit/push
+   e confira **BarberXP v90.1** no rodapé após a publicação.
+
+Como alternativa para quem já usa a CLI: `supabase functions deploy admin-team`.
+O projeto deve estar ligado ao Supabase correto e autenticado na CLI.
+
+Não altere `send-push`, VAPID ou as configurações de notificações. A nova função
+usa as variáveis de servidor fornecidas pelo Supabase, com preferência pela
+chave secreta de servidor atual e compatibilidade com service_role existente.
+Nenhuma chave administrativa vai para o HTML. Nome sem troca de e-mail é salvo
+por uma função do banco exclusiva do dono; trocar e-mail exige publicar admin-team.
+
+O e-mail alterado passa a ser o e-mail de acesso. A função verifica duplicidade
+e alterações concorrentes e confirma nome/e-mail no Auth e no cadastro. A troca
+administrativa usa confirmação pelo dono. O colaborador usará o novo e-mail e
+a senha que já possui. Não reutilize a conta de alguém que saiu para uma pessoa
+nova: cadastre outro acesso para manter o histórico e as comissões corretos.
+
+Referências técnicas: https://supabase.com/docs/reference/javascript/auth-admin-updateuserbyid
+e https://supabase.com/docs/guides/functions/secrets.
+
+## Funcionalidades de comissão desta versão
+
+## Atualizar
+
+1. Em uma consulta nova do Supabase SQL Editor, execute inteiro
+   **barberxp-comissoes-v90.sql**. É o único arquivo necessário nesta atualização:
+   ele inclui a estrutura v89 e o cálculo v90. Requer produtos/comissões v84 e as
+   atualizações v85/v86 já instaladas. Não apaga vendas nem ativa faixas automaticamente.
+2. Extraia o pacote na raiz do projeto, substitua os arquivos e faça commit/push.
+3. Aguarde a publicação e reabra o aplicativo. Confira **BarberXP v90** no rodapé.
+
+## Comissão escalonada escolhida: por parcela de venda
+
+Em **Produtos → Comissões e meta de margem → Comissão escalonada**, o dono escolhe
+a função (barbeiro/dono na produção ou recepção/gestor), define os limites de venda
+para iniciar 15%, 20% e 25%, marca a ativação e salva. A faixa inicial é 10%.
+Não foram inventados limites nem alteradas as porcentagens fixas de 15%/10%.
+Enquanto uma função estiver sem faixas ativadas, mantém a comissão fixa gravada
+nas vendas. Funções podem ser ativadas separadamente.
+
+Exemplo APENAS ilustrativo: limites R$ 100, R$ 200 e R$ 300. Com R$ 350 vendidos,
+as parcelas são R$ 100 × 10% + R$ 100 × 15% + R$ 100 × 20% + R$ 50 × 25%:
+comissão R$ 57,50. O percentual mais alto não é aplicado sobre todo o mês.
+
+Só entram vendas aprovadas e valores após o desconto de 10% do assinante.
+A progressão é individual no mês e soma as vendas do profissional em todas as
+unidades. A comissão é então distribuída entre unidades pelas vendas respectivas.
+Uma venda que atravessa um limite é dividida entre as faixas, com cálculo em centavos.
+Estornos e novas aprovações recalculam o resultado calculado do período.
+
+Salvar ou desativar a regra altera a comissão calculada do mês selecionado. A
+última regra de cada função continua nos próximos meses até uma configuração
+posterior. Regras de meses encerrados só podem ser consultadas; não se alteram
+ao editar o mês atual. Os valores originais de preço, custo e comissão nas vendas
+ficam preservados para auditoria. Não há registro de pagamentos nesta versão:
+o valor exibido é a comissão calculada, não um saldo que desconta pagamentos já feitos.
+
+## Como consultar e baixar o mês anterior
+
+- Em **Produtos**, use **Consultar comissões e meses anteriores**.
+- Dentro do histórico, toque **Mês anterior** ou escolha o mês na lista/filtro.
+- Escolha unidade e profissional, se quiser, e consulte os valores nos cartões
+  do celular ou na tabela do computador. **Baixar relatório CSV** exporta o filtro.
+- Em **Temporadas**, o botão **Consultar comissões desta temporada** abre o mesmo
+  histórico no mês escolhido.
+
+Vendas antigas sem preço/custo/comissão registrados são sinalizadas e não recebem
+estimativas. No CSV esses valores ficam em branco quando todo o grupo está sem
+cálculo. Isso evita confundir um valor desconhecido com uma comissão de zero reais.
+Barbeiros continuam vendo somente a própria comissão no dashboard, agora com a
+indicação de comissão por faixa quando estiver ativa. Gestor pode consultar o
+relatório, mas não configurar limites ou ativar faixas.
+
+## Referência da v89
 
 ## Atualizar sobre v88
 

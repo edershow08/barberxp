@@ -58,7 +58,7 @@ begin
  count(a.id) filter(where a.action_key='assinaturas') as assinaturas,count(a.id) filter(where a.action_key='reativacoes') as reativacoes,
  count(a.id) filter(where a.action_key not in ('cortes','barbas','extras','produtos','assinaturas','reativacoes')) as outras
  from profiles p left join approved a on a.user_id=p.id left join barberxp_member_units mu on mu.user_id=p.id
- where p.active or exists(select 1 from approved x where x.user_id=p.id)
+ where p.active or (p_month<to_char(now() at time zone 'America/Sao_Paulo','YYYY-MM') and exists(select 1 from approved x where x.user_id=p.id))
  group by p.id,p.full_name,p.email,p.role,p.active,mu.unit_id
  having p_unit is null or count(a.id)>0 or (p_unit=-1 and mu.unit_id is null) or mu.unit_id=p_unit
  ) select jsonb_build_object('month',p_month,'unit_id',p_unit,
